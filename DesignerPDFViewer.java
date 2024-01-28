@@ -1,5 +1,5 @@
-/*
-https://www.hackerrank.com/challenges/birthday-cake-candles/problem
+/* 
+https://www.hackerrank.com/challenges/designer-pdf-viewer/problem?isFullScreen=true
 */
 
 import java.io.*;
@@ -17,24 +17,26 @@ import static java.util.stream.Collectors.toList;
 class Result {
 
     /*
-     * Complete the 'birthdayCakeCandles' function below.
+     * Complete the 'designerPdfViewer' function below.
      *
      * The function is expected to return an INTEGER.
-     * The function accepts INTEGER_ARRAY candles as parameter.
+     * The function accepts following parameters:
+     *  1. INTEGER_ARRAY h
+     *  2. STRING word
      */
 
-    public static int birthdayCakeCandles(List<Integer> candles) {
-        int maxx=Integer.MIN_VALUE, sz=candles.size();
-        HashMap<Integer, Integer>mp=new HashMap<>();
-        for(int i=0; i<sz; ++i){
-            maxx=Math.max(maxx, candles.get(i));
-            if(mp.containsKey(candles.get(i))){
-                mp.put(candles.get(i), mp.get(candles.get(i))+1);
-            } else{
-                mp.put(candles.get(i), 1);
-            }
+    public static int designerPdfViewer(List<Integer> h, String word) {
+        HashMap<Character, Integer>mp=new HashMap<>();
+        int idx=0;
+        for(char ch='a'; ch<='z'; ++ch){
+            mp.put(ch, h.get(idx++));
         }
-        return mp.get(maxx);
+        List<Integer>all=new ArrayList<>();
+        for(int i=0; i<word.length(); ++i){
+            all.add(mp.get(word.charAt(i)));
+        }
+        Collections.sort(all);
+        return all.get(all.size()-1)*word.length();
     }
 
 }
@@ -44,13 +46,13 @@ public class Solution {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
 
-        int candlesCount = Integer.parseInt(bufferedReader.readLine().trim());
-
-        List<Integer> candles = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+        List<Integer> h = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
             .map(Integer::parseInt)
             .collect(toList());
 
-        int result = Result.birthdayCakeCandles(candles);
+        String word = bufferedReader.readLine();
+
+        int result = Result.designerPdfViewer(h, word);
 
         bufferedWriter.write(String.valueOf(result));
         bufferedWriter.newLine();

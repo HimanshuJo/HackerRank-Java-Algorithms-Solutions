@@ -1,3 +1,7 @@
+/*
+https://www.hackerrank.com/challenges/compare-the-triplets/problem
+*/
+
 import java.io.*;
 import java.math.*;
 import java.security.*;
